@@ -22,7 +22,7 @@ except ImportError:
     print("OpenCV not found!")
 
 
-def get_frame_indices(video_path, start=0, end=None, n_frames=None, fps=None):
+def get_frame_indices(video_path, start=0, end=None, n_frames=None, fps=None, max_frames=None):
     """
     Get frame indices based on either n_frames or fps.
     """
@@ -48,6 +48,9 @@ def get_frame_indices(video_path, start=0, end=None, n_frames=None, fps=None):
         # Calculate step size
         step = video_fps / fps
         indices = np.arange(start_frame, end_frame, step).astype(int)
+        
+    if max_frames is not None and len(indices) > max_frames:
+        indices = np.linspace(start_frame, end_frame, max_frames).astype(int)
         
     return indices
 
@@ -267,7 +270,7 @@ def get_video_property(video_path):
         height, width, _ = vr[0].shape
         resolution = f"{width}x{height}"
     except Exception as e:
-        # logging.error(f"Failed to get metadata for {video_path}: {e}")
+        print(f"Failed to get metadata for {video_path}: {e}")
         fps = None
         duration = None
         resolution = None
