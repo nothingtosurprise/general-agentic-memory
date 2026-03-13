@@ -95,8 +95,7 @@ class VideoSeg:
 # - Full subtitles for this video: `./SUBTITLES.md`
 # """.strip()
 
-GLOBAL_TEMPLATE="""# Video Global Context
-
+GLOBAL_TEMPLATE="""
 **Title**: {title}
 
 **Duration**: {duration} seconds

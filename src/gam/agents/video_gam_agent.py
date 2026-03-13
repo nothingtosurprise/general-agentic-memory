@@ -788,7 +788,7 @@ class VideoGAMAgent(BaseGAMAgent):
         
         # Use a global ThreadPoolExecutor for segments processing
         # This avoids creating a new executor for each chunk and allows better load balancing
-        max_workers = 8 
+        max_workers = 12
         
         with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
             try:
@@ -997,7 +997,8 @@ class VideoGAMAgent(BaseGAMAgent):
         workspace_dir = self.workspace.root_path # workspace_dir: 是一个字符串
         # 获取这个目录下的 mp4 文件
         video_path = str(list(Path(workspace_dir).glob('*.mp4'))[0])
-        srt_path = str(list(Path(workspace_dir).glob('*.srt'))[0])
+        srt_files = list(Path(workspace_dir).glob('*.srt'))
+        srt_path = str(srt_files[0]) if srt_files else ''
 
         # Prepare text content related to video
         ## Subtitles
